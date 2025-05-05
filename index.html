@@ -1,0 +1,607 @@
+<html><body><pre>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;meta charset="UTF-8" /&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" /&gt;
+&lt;title&gt;Success Tuition Centre - Mathematics Coaching&lt;style&gt;
+  /* Global Reset and base styling */
+  * {
+    box-sizing: border-box;
+  }
+  html, body {
+    height: 100%;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f9faff;
+    color: #222;
+    overflow: hidden;
+  }
+  a {
+    color: #1a73e8;
+    text-decoration: none;
+  }
+  a:hover, a:focus {
+    color: #004db3;
+  }
+  button {
+    cursor: pointer;
+  }
+  button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  /* Header */
+  header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 56px;
+    background: #1a237e;
+    color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 15px;
+    z-index: 10000;
+    user-select: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+  #header-logo {
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+  nav {
+    display: flex;
+    gap: 15px;
+  }
+  nav a, nav button {
+    font-weight: 600;
+    background: transparent;
+    border: none;
+    color: #f0f0f0;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    user-select: none;
+    transition: background-color 0.3s ease;
+  }
+  nav a:hover, nav a.active, nav button:hover {
+    background: #3949ab;
+  }
+
+  /* Footer */
+  footer {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    height: 40px;
+    background: #1a237e;
+    color: #f0f0f0;
+    font-size: 0.85rem;
+    text-align: center;
+    line-height: 40px;
+    user-select: none;
+    box-shadow: 0 -3px 8px rgba(0,0,0,0.3);
+    z-index: 10000;
+  }
+
+  /* Main container */
+  main {
+    position: fixed;
+    top: 56px;
+    bottom: 40px;
+    left: 0; right: 0;
+    overflow: hidden;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 10px 20px;
+    background: transparent;
+  }
+
+  /* Sections container for scroll */
+  #sections-container {
+    height: 100%;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+  }
+
+  section {
+    margin-bottom: 35px;
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  }
+  h1, h2, h3 {
+    color: #1a237e;
+    margin: 0 0 14px 0;
+    user-select: none;
+  }
+  h1 {
+    font-size: 2rem;
+  }
+  h2 {
+    font-size: 1.5rem;
+    border-bottom: 3px solid #1a237e;
+    padding-bottom: 8px;
+  }
+  h3 {
+    font-size: 1.25rem;
+    margin-top: 20px;
+  }
+  p, ul {
+    font-size: 1rem;
+    max-width: 700px;
+  }
+  ul {
+    padding-left: 20px;
+  }
+  ul li {
+    margin-bottom: 8px;
+  }
+
+  /* Buttons */
+  button.primary {
+    background: #ffca28;
+    color: #1a237e;
+    border: none;
+    border-radius: 30px;
+    padding: 12px 28px;
+    font-weight: 700;
+    font-size: 1rem;
+    box-shadow: 0 4px 12px rgba(255,202,40,0.5);
+    transition: background-color 0.3s ease;
+  }
+  button.primary:hover:not(:disabled) {
+    background: #f9a825;
+  }
+
+  /* Form styles */
+  form {
+    max-width: 400px;
+  }
+  label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
+    width: 100%;
+    padding: 8px 10px;
+    margin-bottom: 12px;
+    border: 1.5px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+  }
+  input[type="text"]:focus,
+  input[type="email"]:focus,
+  input[type="password"]:focus {
+    border-color: #1a237e;
+    outline: none;
+  }
+  .error-message {
+    color: #d32f2f;
+    font-size: 0.9rem;
+    margin-top: -10px;
+    margin-bottom: 10px;
+  }
+
+  /* Course list */
+  .course-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    max-width: 100%;
+  }
+  .course-item {
+    flex: 1 1 280px;
+    background: #e8eaf6;
+    border-radius: 8px;
+    padding: 14px 20px;
+    box-shadow: 0 2px 6px rgba(26,35,126,0.1);
+  }
+  .course-item h3 {
+    margin-top: 0;
+    color: #283593;
+  }
+  .course-item ul {
+    padding-left: 18px;
+  }
+
+  /* Gallery grid */
+  #gallery .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(120px,1fr));
+    gap: 12px;
+  }
+  #gallery img {
+    width: 100%;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 6px;
+    box-shadow: 0 1px 5px rgb(0 0 0 / 0.15);
+    cursor: pointer;
+    transition: transform 0.25s ease;
+  }
+  #gallery img:hover, #gallery img:focus {
+    transform: scale(1.1);
+    box-shadow: 0 6px 18px rgba(26,35,126,0.5);
+    outline: none;
+  }
+
+  /* Contact details */
+  #contact .contact-info {
+    max-width: 400px;
+  }
+  #contact .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  #contact svg {
+    width: 22px;
+    height: 22px;
+    fill: #1a237e;
+    flex-shrink: 0;
+  }
+  #contact a.contact-link {
+    font-weight: 600;
+    color: #1a237e;
+  }
+  #contact a.contact-link:hover {
+    text-decoration: underline;
+  }
+
+  address {
+    font-style: normal;
+  }
+
+  /* Home section banner */
+  #home {
+    text-align: center;
+    color: white;
+    background: url('https://images.pexels.com/photos/256369/pexels-photo-256369.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=650&amp;w=940') center/cover no-repeat;
+    padding: 80px 15px 90px;
+    border-radius: 8px;
+    box-shadow: inset 0 0 120px rgba(26,35,126,0.75);
+  }
+  #home h1 {
+    font-size: 2.75rem;
+    margin-bottom: 12px;
+    font-weight: 900;
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
+  }
+  #home p {
+    font-size: 1.3rem;
+    max-width: 600px;
+    margin: 0 auto 25px;
+    text-shadow: 1px 1px 5px rgba(0,0,0,0.6);
+  }
+  #home .btn-contact {
+    display: inline-block;
+    padding: 14px 36px;
+  }
+
+  /* Online Live Classroom section */
+  #live-classroom {
+    background: #f0f0f5;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 3px 12px rgba(26,35,126,0.2);
+    max-width: 720px;
+    margin-top: 10px;
+  }
+
+  /* Whiteboard styling */
+  #whiteboard {
+    border: 2px solid #1a237e;
+    border-radius: 6px;
+    background: #ffffff;
+    cursor: crosshair;
+    width: 100%;
+    max-width: 720px;
+    height: 370px;
+    touch-action: none;
+  }
+
+  #whiteboard-toolbar {
+    margin: 12px 0 8px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  #whiteboard-toolbar button {
+    background: #1a237e;
+    border: none;
+    color: white;
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-weight: 700;
+    user-select: none;
+  }
+  #whiteboard-toolbar button:hover {
+    background: #3949ab;
+  }
+
+  /* Video container */
+  #video-container {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+  video {
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(26,35,126,0.3);
+    background: black;
+  }
+  #admin-video {
+    width: 360px;
+    height: 270px;
+  }
+  #user-video {
+    flex-grow: 1;
+    min-width: 320px;
+    height: 270px;
+  }
+
+  /* Control buttons section */
+  #live-controls button {
+    margin-right: 10px;
+  }
+
+  /* Login/Register modal background */
+  #modal-bg {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0,0,0,0.45);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 12000;
+  }
+  #modal-bg.active {
+    display: flex;
+  }
+  /* Modal content */
+  #modal {
+    background: white;
+    border-radius: 10px;
+    padding: 30px 25px 20px;
+    max-width: 400px;
+    width: 95%;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+  }
+  #modal h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #1a237e;
+    font-weight: 700;
+  }
+  #modal form {
+    max-width: 100%;
+  }
+  #modal .switch-form {
+    margin-top: 12px;
+    font-size: 0.9rem;
+    color: #444;
+  }
+  #modal .switch-form button {
+    background: none;
+    border: none;
+    color: #1a73e8;
+    cursor: pointer;
+    font-weight: 600;
+    padding: 0;
+  }
+  #modal .error-message {
+    color: #d32f2f;
+    margin-top: -8px;
+    margin-bottom: 10px;
+  }
+
+  /* Material list style */
+  #materials-list {
+    max-width: 720px;
+    margin-top: 10px;
+  }
+  #materials-list h4 {
+    font-size: 1rem;
+    margin-bottom: 4px;
+  }
+  #materials-list ul {
+    padding-left: 20px;
+    margin: 0 0 15px 0;
+  }
+  #materials-list ul li {
+    margin-bottom: 6px;
+  }
+
+  /* Responsive for mobile devices */
+  @media (max-width: 650px) {
+    header {
+      padding: 0 10px;
+    }
+    #home h1 {
+      font-size: 2rem;
+    }
+    #home p {
+      font-size: 1rem;
+    }
+    main {
+      padding: 10px 10px 10px 10px;
+    }
+    .course-list {
+      flex-direction: column;
+    }
+    #video-container {
+      flex-direction: column;
+      align-items: center;
+    }
+    #admin-video, #user-video {
+      width: 100%;
+      max-width: 100%;
+      height: 200px;
+    }
+    #whiteboard {
+      height: 300px;
+    }
+  }
+&lt;header&gt;
+ &lt;div id="header-logo"&gt;Success Tuition Centre&lt;a href="#home" class="nav-link active"&gt;Home&lt;a href="#about" class="nav-link"&gt;About Us&lt;a href="#courses" class="nav-link"&gt;Courses Offered&lt;a href="#classes" class="nav-link"&gt;Online &amp;amp; Offline Classes&lt;a href="#gallery" class="nav-link"&gt;Gallery&lt;a href="#materials" class="nav-link"&gt;Materials&lt;a href="#contact" class="nav-link"&gt;Contact Us&lt;button id="login-btn"&gt;Login/Register&lt;/button&gt;
+   &lt;button id="logout-btn" style="display:none;"&gt;Logout&lt;/button&gt;
+ &lt;/header&gt;
+
+&lt;div id="sections-container"&gt;
+
+   &lt;section id="home" tabindex="0" aria-label="Welcome section"&gt;
+     &lt;h1&gt;Success Tuition Centre&lt;/h1&gt;
+     &lt;p&gt;Your Trusted Mathematics Coaching for Classes 10th - 12th&lt;/p&gt;
+     &lt;button class="primary" id="contact-now-btn"&gt;Contact Us Now&lt;/button&gt;
+   &lt;/section&gt;
+
+   &lt;section id="about" tabindex="0" aria-labelledby="about-title"&gt;
+     &lt;h2 id="about-title"&gt;About Us&lt;/h2&gt;
+     &lt;p&gt;Success Tuition Centre is dedicated to providing expert Mathematics coaching to students in classes 10th, 11th, and 12th, following both CBSE and Tamil Nadu State Board curricula. Our experienced faculty ensure thorough understanding and academic excellence through tailored teaching methods&lt;/section&gt;
+
+   &lt;section id="courses" tabindex="0" aria-labelledby="courses-title"&gt;
+     &lt;h2 id="courses-title"&gt;Courses Offered&lt;/h2&gt;
+     &lt;div class="course-list" role="list"&gt;
+       &lt;article class="course-item" role="listitem" tabindex="0" aria-label="Class 10 Mathematics course"&gt;
+         &lt;h3&gt;Class 10 Mathematics&lt;/h3&gt;
+         &lt;ul&gt;
+           &lt;li&gt;CBSE Board Syllabus&lt;/li&gt;
+           &lt;li&gt;Tamil Nadu State Board Syllabus&lt;/li&gt;
+           &lt;li&gt;Conceptual clarity &amp;amp; problem-solving skills&lt;/li&gt;
+           &lt;li&gt;Exam-focused practice sessions&lt;/li&gt;
+         &lt;/ul&gt;
+       &lt;/article&gt;
+       &lt;article class="course-item" role="listitem" tabindex="0" aria-label="Class 11 Mathematics course"&gt;
+         &lt;h3&gt;Class 11 Mathematics&lt;/h3&gt;
+         &lt;ul&gt;
+           &lt;li&gt;CBSE &amp;amp; Tamil Nadu State Board aligned topics&lt;/li&gt;
+           &lt;li&gt;Detailed explanations of theory and applications&lt;/li&gt;
+           &lt;li&gt;Periodic tests to track progress&lt;/li&gt;
+         &lt;/ul&gt;
+       &lt;/article&gt;
+       &lt;article class="course-item" role="listitem" tabindex="0" aria-label="Class 12 Mathematics course"&gt;
+         &lt;h3&gt;Class 12 Mathematics&lt;/h3&gt;
+         &lt;ul&gt;
+           &lt;li&gt;Advanced problem solving &amp;amp; exam preparation&lt;/li&gt;
+           &lt;li&gt;CBSE and State Board tailored study plans&lt;/li&gt;
+           &lt;li&gt;Focus on calculus, algebra, and geometry&lt;/li&gt;
+         &lt;/ul&gt;
+       &lt;/article&gt;
+     &lt;/div&gt;
+   &lt;/section&gt;
+
+   &lt;section id="classes" tabindex="0" aria-labelledby="classes-title"&gt;
+     &lt;h2 id="classes-title"&gt;Online &amp;amp; Offline Classes&lt;/h2&gt;
+     &lt;p&gt;We offer flexible learning options to meet every student's needs&lt;/p&gt;
+     &lt;ul&gt;
+       &lt;strong&gt;Offline Classes&lt;/strong&gt; Conducted at our center in SS Nagar, Kalaiyarkovil, Sivagangai, Tamil Nadu, with small batches for personalized attention&lt;/li&gt;
+       &lt;strong&gt;Online Classes&lt;/strong&gt; Interactive live sessions via video conferencing, accessible from anywhere, with recorded sessions available&lt;/li&gt;
+     &lt;/ul&gt;
+     &lt;div id="live-classroom"&gt;
+       &lt;h3&gt;Live Classroom&lt;/h3&gt;
+       &lt;div id="live-class-status" style="margin-bottom: 8px; color: #1a237e; font-weight: 700;"&gt;Live class is currently&lt;span id="live-status-text"&gt;Offline&lt;/div&gt;
+       &lt;div id="admin-controls" style="margin-bottom: 12px;display:none;"&gt;
+         &lt;button id="start-live-btn" class="primary" title="Start Live Class"&gt;Start Live Class&lt;/button&gt;
+         &lt;button id="stop-live-btn" class="primary" title="Stop Live Class" style="display:none;"&gt;Stop Live Class&lt;/button&gt;
+         &lt;button id="whiteboard-clear-btn" title="Clear Whiteboard"&gt;Clear Whiteboard&lt;/button&gt;
+       &lt;/div&gt;
+       &lt;div id="approval-section" style="max-height: 140px; overflow-y: auto; margin-bottom: 12px; border: 1px solid #1a237e; border-radius: 6px; padding: 8px; display:none;"&gt;
+         &lt;strong&gt;Pending Approvals&lt;/strong&gt;
+         &lt;ul id="pending-approvals-list" style="padding-left: 18px; margin: 6px 0 0 0&lt;/ul&gt;
+       &lt;/div&gt;
+       &lt;div id="live-class-content" style="display:none; flex-direction: column;"&gt;
+         &lt;div id="whiteboard-toolbar" aria-label="Whiteboard controls" role="toolbar"&gt;
+           &lt;button id="draw-black"&gt;Black Pen&lt;/button&gt;
+           &lt;button id="draw-red"&gt;Red Pen&lt;/button&gt;
+           &lt;button id="draw-blue"&gt;Blue Pen&lt;/button&gt;
+           &lt;button id="erase"&gt;Erase&lt;/button&gt;
+         &lt;/div&gt;
+         &lt;canvas id="whiteboard" tabindex="0" aria-label="Whiteboard&lt;/canvas&gt;
+         &lt;div id="video-container" style="margin-top:10px;"&gt;
+           &lt;video id="admin-video" autoplay muted playsinline&lt;/video&gt;
+           &lt;video id="user-video" autoplay playsinline&lt;/video&gt;
+         &lt;/div&gt;
+       &lt;/div&gt;
+       &lt;div id="attendee-message" style="color: #d32f2f; font-weight: 700; margin-top: 8px&lt;/div&gt;
+     &lt;/div&gt;
+   &lt;/section&gt;
+
+   &lt;section id="gallery" tabindex="0" aria-labelledby="gallery-title"&gt;
+     &lt;h2 id="gallery-title"&gt;Gallery&lt;/h2&gt;
+     &lt;div class="grid"&gt;
+       &lt;img src="https://images.pexels.com/photos/669615/pexels-photo-669615.jpeg?auto=compress&amp;amp;cs=tinysrgb&amp;amp;dpr=2&amp;amp;h=150&amp;amp;w=150" alt="Students solving math problems on a blackboard" /&gt;
+       &lt;img src="https://images.pexels.com/photos/256369/pexels-photo-256369.jpeg?auto=compress&amp;amp;cs=tinysrgb&amp;amp;dpr=2&amp;amp;h=150&amp;amp;w=150" alt="Mathematical equations on a chalkboard" /&gt;
+       &lt;img src="https://images.pexels.com/photos/414519/pexels-photo-414519.jpeg?auto=compress&amp;amp;cs=tinysrgb&amp;amp;dpr=2&amp;amp;h=150&amp;amp;w=150" alt="Teacher explaining math concepts to students" /&gt;
+       &lt;img src="https://images.pexels.com/photos/256513/pexels-photo-256513.jpeg?auto=compress&amp;amp;cs=tinysrgb&amp;amp;dpr=2&amp;amp;h=150&amp;amp;w=150" alt="Students studying together with notebooks" /&gt;
+       &lt;img src="https://images.pexels.com/photos/267682/pexels-photo-267682.jpeg?auto=compress&amp;amp;cs=tinysrgb&amp;amp;dpr=2&amp;amp;h=150&amp;amp;w=150" alt="Close-up of mathematical formulas in a notebook" /&gt;
+       &lt;img src="https://images.pexels.com/photos/853168/pexels-photo-853168.jpeg?auto=compress&amp;amp;cs=tinysrgb&amp;amp;dpr=2&amp;amp;h=150&amp;amp;w=150" alt="Calculator and math book on desk" /&gt;
+     &lt;/div&gt;
+   &lt;/section&gt;
+
+   &lt;section id="materials" tabindex="0" aria-labelledby="materials-title"&gt;
+     &lt;h2 id="materials-title"&gt;Materials for Classes 10th - 12th&lt;/h2&gt;
+     &lt;p&gt;Below are useful materials and videos for CBSE and Tamil Nadu State Board Mathematics&lt;/p&gt;
+     &lt;div id="materials-list"&gt;
+       &lt;h3&gt;Class 10&lt;/h3&gt;
+       &lt;/h4&gt;
+       &lt;ul&gt;
+         &lt;a href="https://drive.google.com/file/d/1YtILDhUjEO6LzJwqjl1Dqg0D7UPW0i1L/view?usp=sharing" target="_blank" rel="noopener"&gt;CBSE Class 10 Mathematics Syllabus PDF&lt;/li&gt;
+         &lt;a href="https://www.youtube.com/playlist?list=PLm4n_h87QAWknU1tVBR48E-xneGvNReTm" target="_blank" rel="noopener"&gt;CBSE Class 10 Mathematics Videos (Khan Academy&lt;/li&gt;
+       &lt;/ul&gt;
+       &lt;h4&gt;Tamil Nadu State Board&lt;/h4&gt;
+       &lt;ul&gt;
+         &lt;a href="https://drive.google.com/file/d/1onBFP6C_elW5glKsT3PxyDRb47x_NqD5/view?usp=sharing" target="_blank" rel="noopener"&gt;Tamil Nadu State Board Class 10 Maths Book PDF&lt;/li&gt;
+         &lt;a href="https://www.youtube.com/playlist?list=PLi-S4pp7b18l516oRRgWKeAJkWD6MGloo" target="_blank" rel="noopener"&gt;TN State Board Class 10 Mathematics Tutorials&lt;/li&gt;
+       &lt;/ul&gt;
+
+       &lt;h3&gt;Class 11&lt;/h3&gt;
+       &lt;/h4&gt;
+       &lt;ul&gt;
+         &lt;a href="https://drive.google.com/file/d/1rhEVP3pR4atzVKgoZd4Bo_zS2wH-Yx8w/view?usp=sharing" target="_blank" rel="noopener"&gt;CBSE Class 11 Mathematics Syllabus PDF&lt;/li&gt;
+         &lt;a href="https://www.youtube.com/playlist?list=PLmMhMTTRjkEQFPXn0CADleB-lkpqOcOSB" target="_blank" rel="noopener"&gt;CBSE Class 11 Mathematics Videos (Khan Academy&lt;/li&gt;
+       &lt;/ul&gt;
+       &lt;h4&gt;Tamil Nadu State Board&lt;/h4&gt;
+       &lt;ul&gt;
+         &lt;a href="https://drive.google.com/file/d/1xyu9UjTgS-7ypX1V9WavKzv9_-P64c0T/view?usp=sharing" target="_blank" rel="noopener"&gt;Tamil Nadu State Board Class 11 Maths Book PDF&lt;/li&gt;
+         &lt;a href="https://www.youtube.com/playlist?list=PLyqf3YD9RmDGtxsRuMcfAwWtkiisG5VDY" target="_blank" rel="noopener"&gt;TN State Board Class 11 Mathematics Tutorials&lt;/li&gt;
+       &lt;/ul&gt;
+
+       &lt;h3&gt;Class 12&lt;/h3&gt;
+       &lt;/h4&gt;
+       &lt;ul&gt;
+         &lt;a href="https://drive.google.com/file/d/1Q0Do-qa-xsXZbj7uVN3W9yhawIOsPbG7/view?usp=sharing" target="_blank" rel="noopener"&gt;CBSE Class 12 Mathematics Syllabus PDF&lt;/li&gt;
+         &lt;a href="https://www.youtube.com/playlist?list=PLmMhMTTRjkES3Fx0wXtpGIIMpDieqGq1_" target="_blank" rel="noopener"&gt;CBSE Class 12 Mathematics Videos (Khan Academy&lt;/li&gt;
+       &lt;/ul&gt;
+       &lt;h4&gt;Tamil Nadu State Board&lt;/h4&gt;
+       &lt;ul&gt;
+         &lt;a href="https://drive.google.com/file/d/1mp13V-a9RkvoILuWIQXnQNRnd9vUf-mD/view?usp=sharing" target="_blank" rel="noopener"&gt;Tamil Nadu State Board Class 12 Maths Book PDF&lt;/li&gt;
+         &lt;a href="https://www.youtube.com/playlist?list=PLuSwNoxh8hYyZ7Z_l-3dFAXYLUlKPrqGr" target="_blank" rel="noopener"&gt;TN State Board Class 12 Mathematics Tutorials&lt;/li&gt;
+       &lt;/ul&gt;
+     &lt;/div&gt;
+   &lt;/section&gt;
+
+   &lt;section id="contact" tabindex="0" aria-labelledby="contact-title"&gt;
+     &lt;h2 id="contact-title"&gt;Contact Us&lt;/h2&gt;
+     &lt;div class="contact-info"&gt;
+       &lt;div class="contact-item"&gt;
+         &lt;svg aria-hidden="true" focusable="false" viewBox="0 0 24 24&lt;path d="M22 16.92v3a2.0002 2.0002 0 0 1-2.18 2A19.862 19.862 0 0 1 3 6.18 2.0002 2.0002 0 0 1 5 4h3a2 2 0 0 1 2 1.72 13.161 13.161 0 0 0 .7 2.81 2 2 0 0 1-.45 2L9 11a16.15 16.15 0 0 0 6 6l1.47-1.24a2 2 0 0 1 2-.45 13.234 13.234 0 0 0 2.81.7A2 2 0 0 1 22 16.92z&lt;/svg&gt;
+         &lt;span&gt;Phone:&lt;a href="tel:+919876543210" class="contact-link"&gt;+91 98765 43210&lt;/span&gt;
+       &lt;/div&gt;
+       &lt;div class="contact-item"&gt;
+         &lt;svg aria-hidden="true" focusable="false" viewBox="0 0 24 24&lt;path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0a4.337 4.337 0 0 0-3.045 1.312A4.295 4.295 0 0 0 1 6.563c-.243 3.605-.243 11.631 0 15.238a4.276 4.276 0 0 0 1.34 3.02 4.35 4.35 0 0 0 3.022 1.328c3.61.25 11.626.25 15.239 0a4.275 4.275 0 0 0 3.02-1.33 4.325 4.325 0 0 0 1.32-3.02c.25-3.604.25-11.63 0-15.237a4.32 4.32 0 0 0-1.314-3.024 4.32 4.32 0 0 0-3.053-1.312Zm-11.615 6.838v7.544l6.545-3.772-6.545-3.772Z&lt;/svg&gt;
+         &lt;span&gt;YouTube:&lt;a href="https://www.youtube.com/channel/UC-success-tuition" target="_blank" rel="noopener" class="contact-link"&gt;Success Tuition Centre&lt;/span&gt;
+       &lt;/div&gt;
+       &lt;div class="contact-item"&gt;
+         &lt;svg aria-hidden="true" focusable="false" viewBox="0 0 24 24&lt;path d="M12 2C6.48 2 2 6.48 2 12a9.97 9.97 0 0 0 3 7.17v-5.09H4v-4h1v-2c0-1.37.83-2.68 2-3.22V7h1v2h2v4h-3v5.09A9.974 9.974 0 0 0 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2Z&lt;/svg&gt;
+         &lt;span&gt;Facebook:&lt;a href="https://facebook.com/successtuitioncentre" target="_blank" rel="noopener" class="contact-link"&gt;Success Tuition Centre&lt;/span&gt;
+       &lt;/div&gt;
+       &lt;div class="contact-item"&gt;
+         &lt;svg aria-hidden="true" focusable="false" viewBox="0 0 24 24&lt;path d="M17.472 14.382c-.297-.148-1.758-.867-2.031-.967-.273-.099-.473-.148-.673.15-.198.297-.767.966-.94 1.164-.173.198-.347.223-.644.074-.297-.148-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.654-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.44
+</pre></body></html>
